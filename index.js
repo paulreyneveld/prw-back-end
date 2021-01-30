@@ -10,17 +10,31 @@ const url =
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 
-const noteSchema = new mongoose.Schema({
+const blogSchema = new mongoose.Schema({
+  title: String,
   content: String,
-  date: Date,
-  important: Boolean,
+  author: String,
+  date: Date
 })
 
-const Note = mongoose.model('Note', noteSchema)
+const Blog = mongoose.model('Blog', blogSchema)
 
 
 app.get('/', (request, response) => {
-  response.send('<h1>Hello World!</h1>')
+  response.send(`<h1>Hello World!</h1> & ${password}`)
+})
+
+app.post('/', async (request, response) => {
+    const body = request.body
+    console.log(request.body)
+    // const blog = new Blog({
+    //     title: body.title,
+    //     content: body.content,
+    //     author: body.author
+    // })
+
+    // await blog.save()
+    response.status(200).end()
 })
 
 const PORT = 3001
