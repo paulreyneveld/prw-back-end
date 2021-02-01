@@ -3,6 +3,8 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 
+app.use(express.json())
+
 // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
 const password = process.env.DB_PASSWORD
 const url =
@@ -25,15 +27,14 @@ app.get('/', (request, response) => {
 })
 
 app.post('/', async (request, response) => {
-    const body = request.body
-    console.log(request.body)
-    // const blog = new Blog({
-    //     title: body.title,
-    //     content: body.content,
-    //     author: body.author
-    // })
+    const body = await request.body
+    const blog = new Blog({
+        title: body.title,
+        content: body.content,
+        author: body.author
+    })
 
-    // await blog.save()
+    await blog.save()
     response.status(200).end()
 })
 
