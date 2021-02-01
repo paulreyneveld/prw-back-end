@@ -2,7 +2,9 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+const cors = require('cors')
 
+app.use(cors())
 app.use(express.json())
 
 // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
@@ -24,6 +26,12 @@ const Blog = mongoose.model('Blog', blogSchema)
 
 app.get('/', (request, response) => {
   response.send(`<h1>Hello World!</h1> & ${password}`)
+})
+
+app.get('/blogs', async (request, response) => {
+  const blogs = await Blog.find({})
+  response.json(blogs)
+
 })
 
 app.post('/', async (request, response) => {
